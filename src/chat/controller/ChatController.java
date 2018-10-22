@@ -1,13 +1,14 @@
-package controller;
-import model.Chatbot;
+package chat.controller;
 import javax.swing.JOptionPane;
 
-public class Controller 
+import chat.model.Chatbot;
+
+public class ChatController 
 {
 
 	private Chatbot simpleBot;
 	
-	public Controller()
+	public ChatController()
 	{
 		simpleBot = new Chatbot();
 		
@@ -30,6 +31,11 @@ public class Controller
 		String userResponse = JOptionPane.showInputDialog(null, "i want to stop this conversation");
 		output = simpleBot.processText(userResponse);
 		return output;
+	}
+	
+	public Chatbot getChatbot()
+	{
+		return simpleBot;
 	}
 	
 
