@@ -31,12 +31,19 @@ public class ChatController
 		
 	}
 	
-	public String interactWithChatbot(String text)
+	public String interactWithChatbot(String userText)
 	{
-		String output = "";
-		String userResponse = JOptionPane.showInputDialog(null, "i want to stop this conversation");
-		output = simpleBot.processText(userResponse);
-		return output;
+		
+		String Output = "";
+		String nullCheck = "not null";
+		userText = JOptionPane.showInputDialog(null, "i want to stop this conversation");
+		Output = simpleBot.processText(userText);
+		if(userText == null)
+		{
+			Output = "you need to type something it can't contain null";
+			nullCheck = "null";
+		}
+		return nullCheck;
 	}
 	
 	public Chatbot getChatbot()
@@ -44,13 +51,22 @@ public class ChatController
 		return simpleBot;
 	}
 
-public String useChatbotCheckers(String text)
-{
-	String output = "";
-	String userResponse = JOptionPane.showInputDialog(null, "");
-	
-	return output;
-}
+	public String useChatbotCheckers(String Text)
+	{
+		String testedChecker = "these checkers passed:";
+		if (simpleBot.contentChecker(Text))
+		{
+			testedChecker += "\nContent Checker";
+		}
+		if (simpleBot.spookyChecker(Text))
+		{
+			testedChecker += "Halloween";
+		}
+		return testedChecker;
+		
+		
+		
+	}
 
 
 
