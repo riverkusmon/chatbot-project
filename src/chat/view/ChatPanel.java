@@ -58,7 +58,7 @@ public class ChatPanel extends JPanel
 		chatPane = new JScrollPane();
 
 
-		chatArea = new JTextArea("Chat Area", 20, 50);
+		chatArea = new JTextArea("", 20, 50);
 		
 		setupScrollPane();
 		setupPanel();
@@ -123,7 +123,7 @@ public class ChatPanel extends JPanel
 	{
 		this.setLayout(appLayout);
 		this.setPreferredSize(new Dimension(800, 600));
-		this.setBackground(Color.MAGENTA);
+		this.setBackground(Color.GRAY);
 		this.add(chatPane);
 		this.add(chatButton);
 		this.add(saveButton);
