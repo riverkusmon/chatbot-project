@@ -70,7 +70,12 @@ public class Chatbot {
 		responseList.add("I guess");
 		responseList.add("sure");
 		responseList.add("thats nice");
-
+		
+		//rick and morty copypasta
+		responseList.add("To be fair, you have to have a very high IQ to understand Rick and Morty. The humour is extremely subtle, and without a solid grasp of theoretical physics most of the jokes will go over a typical viewer's head. There's also Rick's nihilistic outlook, which is deftly woven into his characterisation- his personal philosophy draws heavily from Narodnaya Volya literature, for instance. The fans understand this stuff; they have the intellectual capacity to truly appreciate the depths of these jokes, to realise that they're not just funny- they say something deep about LIFE. As a consequence people who dislike Rick & Morty truly ARE idiots- of course they wouldn't appreciate, for instance, the humour in Rick's existential catchphrase \"Wubba Lubba Dub Dub,\" which itself is a cryptic reference to Turgenev's Russian epic Fathers and Sons. I'm smirking right now just imagining one of those addlepated simpletons scratching their heads in confusion as Dan Harmon's genius wit unfolds itself on their television screens. What fools.. how I pity them. :joy:\n" + 
+				"\n" + 
+				"And yes, by the way, i DO have a Rick & Morty tattoo. And no, you cannot see it. It's for the ladies' eyes only- and even then they have to demonstrate that they're within 5 IQ points of my own (preferably lower) beforehand. Nothin personnel kid :sunglasses:");
+		// end of rick and morty copypasta
 		spookyList.add("Halloween");
 		spookyList.add("boo");
 		spookyList.add("you get a f");
@@ -82,22 +87,20 @@ public class Chatbot {
 		spookyList.add("alarm is set for 4:30 am");
 
 	}
-
-	// this is to get a random response
-	// it doesn't work though
+	
 	public String processText(String userText) {
 		String answer = "";
 		if (userText == null) {
-			answer += "dont send null";
+			answer += "dont send null\n";
 		} else {
-			answer += "You said: " + userText;
+			answer += "You said: " + userText + "\n";
 
 			if (contentChecker(userText)) {
-				answer += "You said the special words";
+				answer += "You said: " + userText;
 			}
 		}
 		int randomIndex = (int) (responseList.size() * Math.random());
-		return answer += "Chatbot says: " + responseList.get(randomIndex);
+		return answer += "Chatbot says: " + responseList.get(randomIndex) + "\n";
 	}
 
 	public boolean legitimacyChecker(String userText) {

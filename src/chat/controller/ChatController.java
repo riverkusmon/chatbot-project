@@ -18,18 +18,6 @@ public class ChatController
 	
 	public void start() 
 	{
-		String userInput = "";
-				
-		while(!userInput.equalsIgnoreCase("quit"))
-			{
-				userInput = JOptionPane.showInputDialog(null, "what do you want to do");
-			
-			}	
-		
-		while(userInput.isEmpty())
-		{
-			JOptionPane.showInputDialog(null, "actually type something");
-		}
 		
 	}
 	
@@ -38,14 +26,8 @@ public class ChatController
 		
 		String Output = "";
 		String nullCheck = "not null";
-		userText = JOptionPane.showInputDialog(null, "i want to stop this conversation");
-		Output = simpleBot.processText(userText);
-		if(userText == null)
-		{
-			Output = "you need to type something it can't contain null";
-			nullCheck = "null";
-		}
-		return nullCheck;
+		Output += simpleBot.processText(userText);
+		return Output;
 	}
 	
 	public Chatbot getChatbot()
