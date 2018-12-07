@@ -16,6 +16,7 @@ public class ChatPanel extends JPanel
 	private JButton checkerButton;
 	private JButton loadButton;
 	private JButton saveButton;
+	private JButton resetButton;
 	private JTextField chatField;
 	private JTextArea chatArea;
 	private JScrollPane chatPane;
@@ -36,6 +37,9 @@ public class ChatPanel extends JPanel
 		chatButton = new JButton("Chat");
 		appLayout.putConstraint(SpringLayout.NORTH, saveButton, 4, SpringLayout.SOUTH, chatButton);
 		appLayout.putConstraint(SpringLayout.SOUTH, chatButton, -108, SpringLayout.SOUTH, this);
+		
+		resetButton = new JButton("Reset");
+		appLayout.putConstraint(SpringLayout.NORTH, resetButton, 6, SpringLayout.SOUTH, loadButton);
 
 		chatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -56,6 +60,8 @@ public class ChatPanel extends JPanel
 		
 
 		chatPane = new JScrollPane();
+		appLayout.putConstraint(SpringLayout.WEST, resetButton, 0, SpringLayout.WEST, chatPane);
+		appLayout.putConstraint(SpringLayout.EAST, resetButton, 0, SpringLayout.EAST, chatPane);
 
 
 		chatArea = new JTextArea("", 20, 50);
@@ -106,6 +112,56 @@ public class ChatPanel extends JPanel
 			}
 		});
 		
+		loadButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String input = chatField.getText();
+				String output = "";
+				output = appController.interactWithChatbot(input);
+				chatArea.append(output);
+				chatField.setText("");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
+			}
+		});
+		
+		
+		saveButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String input = chatField.getText();
+				String output = "";
+				output = appController.interactWithChatbot(input);
+				chatArea.append(output);
+				chatField.setText("");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
+			}
+		});
+		
+		
+		checkerButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String input = chatField.getText();
+				String output = "";
+				output = appController.interactWithChatbot(input);
+				chatArea.append(output);
+				chatField.setText("");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
+			}
+		});
+		
+		resetButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				chatArea.setText("");
+				chatField.setText("");
+			}
+		});
+		
 	}
 	
 	private void setupScrollPane()
@@ -130,6 +186,7 @@ public class ChatPanel extends JPanel
 		this.add(checkerButton);
 		this.add(loadButton);
 		this.add(chatField);
+		this.add(resetButton);
 		
 	}
 }
