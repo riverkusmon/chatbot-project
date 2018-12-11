@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.*;
 import chat.controller.ChatController;
+import chat.controller.IOController;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import controller.
 
 public class ChatPanel extends JPanel
 {
@@ -131,11 +134,9 @@ public class ChatPanel extends JPanel
 			public void actionPerformed(ActionEvent click)
 			{
 				String input = chatField.getText();
-				String output = "";
-				output = appController.interactWithChatbot(input);
-				chatArea.append(output);
-				chatField.setText("");
-				chatArea.setCaretPosition(chatArea.getDocument().getLength());
+				String path = "";
+				IOController.saveText(appController, path, input);
+				chatField.setText("Chat saved!");
 			}
 		});
 		
