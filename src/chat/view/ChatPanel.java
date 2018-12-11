@@ -8,7 +8,6 @@ import chat.controller.IOController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import controller.
 
 public class ChatPanel extends JPanel
 {
@@ -128,13 +127,14 @@ public class ChatPanel extends JPanel
 			}
 		});
 		
-		
+		//this makes the save method
 		saveButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click)
 			{
 				String input = chatField.getText();
-				String path = "";
+				//the . assigns the save to the current directory
+				String path = ".";
 				IOController.saveText(appController, path, input);
 				chatField.setText("Chat saved!");
 			}

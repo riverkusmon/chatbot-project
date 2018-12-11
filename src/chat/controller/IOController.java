@@ -15,7 +15,9 @@ public class IOController
 			String filename = path;
 			Calendar date = Calendar.getInstance();
 			filename += "/" + date.get(Calendar.MONTH) + " " + date.get(Calendar.DAY_OF_MONTH);
+			filename += date.get(Calendar.HOUR) + "-" + date.get(Calendar.MINUTE);
 			filename += " chatbot save.txt";
+			
 			File saveFile = new File(filename);
 			Scanner textScanner = new Scanner(textToSave);
 			PrintWriter saveText = new PrintWriter(saveFile);
@@ -25,7 +27,7 @@ public class IOController
 				String currentLine = textScanner.nextLine();
 				saveText.println(currentLine);
 			}
-			
+			// ends the scanner and the save method
 			textScanner.close();
 			saveText.close();
 			
