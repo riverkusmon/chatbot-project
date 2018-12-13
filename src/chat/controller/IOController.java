@@ -43,7 +43,7 @@ public class IOController
 		}
 	}
 	
-	public static String loadFile(CHatController app, String path)
+	public static String loadFile(ChatController app, String path)
 	{
 		String contents = "";
 		

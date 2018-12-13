@@ -43,11 +43,6 @@ public class ChatPanel extends JPanel
 		resetButton = new JButton("Reset");
 		appLayout.putConstraint(SpringLayout.NORTH, resetButton, 6, SpringLayout.SOUTH, loadButton);
 
-		chatButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-
 
 		checkerButton = new JButton("Check Text");
 
@@ -75,6 +70,34 @@ public class ChatPanel extends JPanel
 		
 	}
 
+	private String getPath(String choice)
+	{
+		String path = ".";
+		int result = -99;
+		JFileChooser fileChooser = new JFileChooser();
+		if(choice.equals("save"))
+		{
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			result = fileChooser.showSaveDialog(this);
+			if(result == JFileChooser.APPROVE_OPTION)
+			{
+				path = fileChooser.getCurrentDirectory().getAbsolutePath();
+			}
+		}
+		else
+		{
+			result = fileChooser.showOpenDialog(this);
+			if(result == JFileChooser.APPROVE_OPTION)
+			{
+				path = fileChooser.getSelectedFile().getAbsolutePath();
+			}
+		}
+		return path;
+	}
+	
+	
+	
+	
 	private void setupLayout()
 	{
 		appLayout.putConstraint(SpringLayout.NORTH, chatPane, 50, SpringLayout.NORTH, this);
@@ -118,12 +141,9 @@ public class ChatPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				String input = chatField.getText();
-				String output = "";
-				output = appController.interactWithChatbot(input);
-				chatArea.append(output);
-				chatField.setText("");
-				chatArea.setCaretPosition(chatArea.getDocument().getLength());
+				String path = getPath("load");
+				String chatText = IOController.loadFile(appController, path);
+				chatArea.setText(chatText);
 			}
 		});
 		
@@ -132,10 +152,10 @@ public class ChatPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				String input = chatField.getText();
+				String chatText = chatArea.getText();
 				//the . assigns the save to the current directory
-				String path = ".";
-				IOController.saveText(appController, path, input);
+				String path = getPath("save");
+				IOController.saveText(appController, path, chatText);
 				chatField.setText("Chat saved!");
 			}
 		});
