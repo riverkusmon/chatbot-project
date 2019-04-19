@@ -2,6 +2,8 @@ package chat.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
+
 import javax.swing.*;
 import chat.controller.ChatController;
 import chat.controller.IOController;
@@ -19,10 +21,20 @@ public class ChatPanel extends JPanel
 	private JButton loadButton;
 	private JButton saveButton;
 	private JButton resetButton;
+	private JButton tweetButton;
+	private JButton searchTwitterButton;
 	private JTextField chatField;
 	private JTextArea chatArea;
 	private JScrollPane chatPane;
+	private JPanel buttonPanel;
 	
+	private ImageIcon saveIcon;
+	private ImageIcon loadIcon;
+	private ImageIcon chatIcon;
+	private ImageIcon checkerIcon;
+	private ImageIcon tweetIcon;
+	private ImageIcon searchIcon;
+	private ImageIcon resetIcon;
 	
 	public ChatPanel(ChatController appController)
 	{
@@ -30,33 +42,47 @@ public class ChatPanel extends JPanel
 		this.appController = appController;
 		appLayout = new SpringLayout();
 		
-		saveButton = new JButton("Save");
-
+		saveIcon = new ImageIcon(getClass().getResource("/chat/view/images/beast.png"));
+		loadIcon = new ImageIcon(getClass().getResource("/chat/view/images/rock.jpg"));
+		chatIcon = new ImageIcon(getClass().getResource("/chat/view/images/joker.jpg"));
+		checkerIcon = new ImageIcon(getClass().getResource("/chat/view/images/middle.jpg"));
+		tweetIcon = new ImageIcon(getClass().getResource("/chat/view/images/nefario.jpg"));
+		searchIcon = new ImageIcon(getClass().getResource("/chat/view/images/thug.jpg"));
+		resetIcon = new ImageIcon(getClass().getResource("/chat/view/images/vector.jpeg"));
 		
-		loadButton = new JButton("Load");
+		saveButton = new JButton("Save", saveIcon);
+		
+		loadButton = new JButton("Load", loadIcon);
+		
 		appLayout.putConstraint(SpringLayout.NORTH, loadButton, 6, SpringLayout.SOUTH, saveButton);
 
-		chatButton = new JButton("Chat");
+		chatButton = new JButton("Chat", chatIcon);
 		appLayout.putConstraint(SpringLayout.NORTH, saveButton, 4, SpringLayout.SOUTH, chatButton);
 		appLayout.putConstraint(SpringLayout.SOUTH, chatButton, -108, SpringLayout.SOUTH, this);
 		
-		resetButton = new JButton("Reset");
+		resetButton = new JButton("Reset", resetIcon);
 		appLayout.putConstraint(SpringLayout.NORTH, resetButton, 6, SpringLayout.SOUTH, loadButton);
 
 
-		checkerButton = new JButton("Check Text");
+		checkerButton = new JButton("Check Text", checkerIcon);
 
-
+		tweetButton = new JButton("Tweet It", tweetIcon);
 		
+		searchTwitterButton = new JButton("Search It", searchIcon);
+		
+		buttonPanel = new JPanel(new GridLayout(1,0));
 		
 		
 		chatField = new JTextField("Talk to the bot here", 50);
+		appLayout.putConstraint(SpringLayout.NORTH, buttonPanel, 6, SpringLayout.SOUTH, chatField);
 
 
 		chatField.setHorizontalAlignment(SwingConstants.CENTER);
 		
 
 		chatPane = new JScrollPane();
+		appLayout.putConstraint(SpringLayout.WEST, buttonPanel, 0, SpringLayout.WEST, chatPane);
+		appLayout.putConstraint(SpringLayout.EAST, buttonPanel, 0, SpringLayout.EAST, chatPane);
 		appLayout.putConstraint(SpringLayout.WEST, resetButton, 0, SpringLayout.WEST, chatPane);
 		appLayout.putConstraint(SpringLayout.EAST, resetButton, 0, SpringLayout.EAST, chatPane);
 
@@ -67,6 +93,7 @@ public class ChatPanel extends JPanel
 		setupPanel();
 		setupLayout();
 		setupListeners();	
+		setupButtonPanel();
 		
 	}
 
@@ -116,8 +143,6 @@ public class ChatPanel extends JPanel
 		appLayout.putConstraint(SpringLayout.EAST, saveButton, 0, SpringLayout.EAST, chatPane);
 		appLayout.putConstraint(SpringLayout.NORTH, checkerButton, 6, SpringLayout.SOUTH, chatField);
 		appLayout.putConstraint(SpringLayout.NORTH, chatButton, 6, SpringLayout.SOUTH, chatField);
-		appLayout.putConstraint(SpringLayout.SOUTH, checkerButton, -4, SpringLayout.NORTH, saveButton);
-		appLayout.putConstraint(SpringLayout.EAST, chatButton, -6, SpringLayout.WEST, checkerButton);
 		
 		
 	}
@@ -196,18 +221,28 @@ public class ChatPanel extends JPanel
 		chatPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 	
+	private void setupButtonPanel()
+	{
+		buttonPanel.add(saveButton);
+		buttonPanel.add(chatButton);
+		buttonPanel.add(checkerButton);
+		buttonPanel.add(tweetButton);
+		buttonPanel.add(loadButton);
+		buttonPanel.add(searchTwitterButton);
+		buttonPanel.add(resetButton);
+	}
+	
 	private void setupPanel()
 	{
 		this.setLayout(appLayout);
-		this.setPreferredSize(new Dimension(800, 600));
+		this.setPreferredSize(new Dimension(1024, 768));
 		this.setBackground(Color.GRAY);
 		this.add(chatPane);
-		this.add(chatButton);
-		this.add(saveButton);
-		this.add(checkerButton);
-		this.add(loadButton);
 		this.add(chatField);
-		this.add(resetButton);
+		buttonPanel.setPreferredSize(new Dimension(900, 150));
+		buttonPanel.setBackground(Color.CYAN);
+		this.add(buttonPanel);
+
 		
 	}
 }
