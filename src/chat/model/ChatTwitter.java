@@ -25,7 +25,7 @@ public class ChatTwitter
 		this.tweetedWords = new ArrayList<String>();
 		this.wordsAndCount = new HashMap<String, Integer>();
 		this.totalWordCount = 0;
-		this.tweetEnd = "";//" @ChatbotCTEC, @CTECNow, @CSCheerLeader, @CodyHenrichsen"; 
+		this.tweetEnd = " @ChatbotCTEC, @CTECNow, @CSCheerLeader, @CodyHenrichsen"; 
 	}
 	
 	public void sendTweet(String textToTweet)
@@ -43,6 +43,7 @@ public class ChatTwitter
 			app.handleErrors(otherError);
 		}
 	}
+	
 	
 	private void collectTweets(String username)
 	{	
@@ -102,13 +103,32 @@ public class ChatTwitter
 		return scrubbedString;
 	}
 	
+	private void removeBlanks()
+	{
+		for (int index = tweetedWords.size() - 1; index >= 0; index--)
+		{
+			if (tweetedWords.get(index).trim().length() == 0)
+			{
+				tweetedWords.remove(index);
+			}
+		}
+	}
+	
+	private ArrayList<Map.Entry<String, Integer>> sortHashMap()
+	{
+		ArrayList<Map.Entry<String, Integer>> entries = new ArrayList<Map.Entry<String, Integer>>(wordsAndCount.entrySet());
+		entries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+		
+		return entries;
+	}
+	
 	private String [] createIgnoredWordArray()
 	{
 		String [] boringWords;
 		String fileText = IOController.loadFile(app, "commonWords.txt");
 		int wordCount = 0;
 		
-		Scanner wordScanner = new Scanner(fileText);
+		Scanner wordScanner = new Scanner(this.getClass().getResourceAsStream("data/commonWords.txt"));
 		
 		while(wordScanner.hasNextLine())
 		{
@@ -198,33 +218,33 @@ public class ChatTwitter
 		return allWords;
 	}
 	
-//	public String getMostCommonWord(String username)
-//	{
-//		String mostCommon = "";
-//		
-//		collectTweets(username);
-//		turnStatusesToWords();
-//		totalWordCount = tweetedWords.size();
-//		String [] boring = createIgnoredWordArray();
-//		//removeBlanks();
-//		trimTheBoringWords(boring);
-//		generateWordCount();
-//
-//		//ArrayList<Map.Entry<String, Integer>> sorted = sortHashMap();	    
-////		String mostCommonWord = sorted.get(0).getKey();
-//		int maxWord = 0;
-//		
-////		maxWord = sorted.get(0).getValue();
-//
-//		mostCommon = "The most common word in " + username + "'s "+ searchedTweets.size() + " tweets is " +
-//					mostCommonWord + ", and it was used " + maxWord + " times.\nThis is " + 
-//					(DecimalFormat.getPercentInstance().format(((double) maxWord) / totalWordCount)) + 
-//					" of total words: " + totalWordCount + " and is " + 
-//					(DecimalFormat.getPercentInstance().format(((double) maxWord) / wordsAndCount.size())) +
-//					" of the unique words: " + wordsAndCount.size() ;
-//		
-//		mostCommon += "\n\n" + sortedWords();
-//		
-//		return mostCommon;
-//	}
+	public String getMostCommonWord(String username)
+	{
+		String mostCommon = "";
+		
+		collectTweets(username);
+		turnStatusesToWords();
+		totalWordCount = tweetedWords.size();
+		String [] boring = createIgnoredWordArray();
+		removeBlanks();
+		trimTheBoringWords(boring);
+		generateWordCount();
+
+		ArrayList<Map.Entry<String, Integer>> sorted = sortHashMap();	    
+		String mostCommonWord = sorted.get(0).getKey();
+		int maxWord = 0;
+		
+		maxWord = sorted.get(0).getValue();
+
+		mostCommon = "The most common word in " + username + "'s "+ searchedTweets.size() + " tweets is " +
+					mostCommonWord + ", and it was used " + maxWord + " times.\nThis is " + 
+					(DecimalFormat.getPercentInstance().format(((double) maxWord) / totalWordCount)) + 
+					" of total words: " + totalWordCount + " and is " + 
+					(DecimalFormat.getPercentInstance().format(((double) maxWord) / wordsAndCount.size())) +
+					" of the unique words: " + wordsAndCount.size() ;
+		
+		mostCommon += "\n\n" + sortedWords();
+		
+		return mostCommon;
+	}
 }

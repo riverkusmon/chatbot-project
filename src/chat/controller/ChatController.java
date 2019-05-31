@@ -56,6 +56,12 @@ public class ChatController
 		myTwitter.sendTweet(userText);
 	}
 	
+	public String findWords(String user)
+	{
+		String results = myTwitter.getMostCommonWord(user);
+		return results;
+	}
+	
 	private void close()
 	{
 		System.exit(0);
